@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SearchView: View {
     let array = [
-        "사자", "코끼리", "암닭"
+        "사자", "코끼리", "암닭", "사자", "코끼리", "암닭",
+        "사자", "코끼리", "암닭", "사자", "코끼리", "암닭"
     ]
     
     @State private var searchText = ""
@@ -19,7 +20,15 @@ struct SearchView: View {
             VStack {
                 SearchBar(text: $searchText)
                     .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                
+                List {
+                    ForEach(array.filter{ $0.hasPrefix(searchText) || searchText == ""}, id: \.self) {
+                        searchText in Text(searchText)
+                    }
+                }
+                .listStyle(PlainListStyle())
             }
+            .navigationTitle("검색 기능")
         }
     }
 }
