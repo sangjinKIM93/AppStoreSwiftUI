@@ -17,19 +17,15 @@ struct SearchView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                SearchBar(text: $searchText)
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                
-                List {
-                    ForEach(array.filter{ $0.hasPrefix(searchText) || searchText == ""}, id: \.self) {
-                        searchText in Text(searchText)
-                    }
+            List {
+                ForEach(1..<50) { index in
+                    Text("Sample Row Nr.\(index)")
                 }
-                .listStyle(PlainListStyle())
             }
-            .navigationTitle("검색 기능")
+            .navigationTitle("Navigation")
+            .overlay(NavigationSearch().frame(width: 0, height: 0))
         }
+        
     }
 }
 

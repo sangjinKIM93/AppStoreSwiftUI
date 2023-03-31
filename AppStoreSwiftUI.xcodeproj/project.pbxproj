@@ -16,6 +16,7 @@
 		48646F2F29D46AFF00928D18 /* AppStoreSwiftUIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48646F2E29D46AFF00928D18 /* AppStoreSwiftUIUITestsLaunchTests.swift */; };
 		48646F3E29D46FBE00928D18 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48646F3D29D46FBE00928D18 /* SearchBar.swift */; };
 		48646F4029D4720D00928D18 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48646F3F29D4720D00928D18 /* SearchView.swift */; };
+		48878BF129D71233002F6402 /* NavigationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48878BF029D71233002F6402 /* NavigationSearch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		48646F2E29D46AFF00928D18 /* AppStoreSwiftUIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreSwiftUIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		48646F3D29D46FBE00928D18 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		48646F3F29D4720D00928D18 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		48878BF029D71233002F6402 /* NavigationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSearch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				48646F3D29D46FBE00928D18 /* SearchBar.swift */,
+				48878BF029D71233002F6402 /* NavigationSearch.swift */,
 				48646F3F29D4720D00928D18 /* SearchView.swift */,
 			);
 			path = View;
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48878BF129D71233002F6402 /* NavigationSearch.swift in Sources */,
 				48646F4029D4720D00928D18 /* SearchView.swift in Sources */,
 				48646F1429D46AFC00928D18 /* ContentView.swift in Sources */,
 				48646F1229D46AFC00928D18 /* AppStoreSwiftUIApp.swift in Sources */,
