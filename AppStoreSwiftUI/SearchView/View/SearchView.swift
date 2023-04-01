@@ -18,12 +18,12 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(1..<50) { index in
-                    Text("Sample Row Nr.\(index)")
+                ForEach(array.filter{$0.hasPrefix(searchText) || searchText == ""}, id: \.self) {
+                    searchText in Text(searchText)
                 }
             }
             .navigationTitle("Navigation")
-            .overlay(NavigationSearch().frame(width: 0, height: 0))
+            .navigationBarSearch($searchText)
         }
         
     }

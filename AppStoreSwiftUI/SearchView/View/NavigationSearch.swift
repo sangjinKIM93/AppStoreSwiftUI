@@ -1,51 +1,77 @@
-//
-//  NavigationSearch.swift
-//  AppStoreSwiftUI
-//
-//  Created by 김상진 on 2023/03/31.
-//
-
 import SwiftUI
-import UIKit
+import Combine
 
-struct NavigationSearch: UIViewControllerRepresentable {
-    typealias UIViewControllerType = Wrapper
+public extension View {
+    public func navigationBarSearch(_ searchText: Binding<String>) -> some View {
+        return overlay(SearchBarWrapper(text: searchText).frame(width: 0, height: 0))
+    }
+}
+
+fileprivate struct SearchBarWrapper: UIViewControllerRepresentable {
+    @Binding
+    var text: String
+    
+    init(text: Binding<String>) {
+        self._text = text
+    }
+    
+    func makeUIViewController(context: Context) -> SearchBarWrapperController {
+        return SearchBarWrapperController()
+    }
+    
+    func updateUIViewController(_ controller: SearchBarWrapperController, context: Context) {
+        controller.searchController = context.coordinator.searchController
+    }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(representable: self)
-    }
-
-    func makeUIViewController(context: Context) -> Wrapper {
-        // 원래는 UITableViewController 이런 객체가 와야 하는데, searchController를 가진 하나의 Wrapper 객체를 return 하는거야.
-        Wrapper()
+        return Coordinator(text: $text)
     }
     
-    func updateUIViewController(_ uiViewController: Wrapper, context: Context) {
-        // wrapper에 UISearchViewController 생성해서 넣어주기
-        uiViewController.searchController = context.coordinator.searchController
-    }
-    
-    // UIKit -> SwiftUI로의 데이터 전달
-    class Coordinator: NSObject {
-        let representable: NavigationSearch
-        
+    class Coordinator: NSObject, UISearchResultsUpdating {
+        @Binding
+        var text: String
         let searchController: UISearchController
         
-        init(representable: NavigationSearch) {
-            self.representable = representable
+        private var subscription: AnyCancellable?
+        
+        init(text: Binding<String>) {
+            self._text = text
             self.searchController = UISearchController(searchResultsController: nil)
+            
             super.init()
+            
+            searchController.searchResultsUpdater = self
+            searchController.hidesNavigationBarDuringPresentation = true
+            searchController.obscuresBackgroundDuringPresentation = false
+            
+            self.searchController.searchBar.text = self.text
+            self.subscription = self.text.publisher.sink { _ in
+                self.searchController.searchBar.text = self.text
+            }
+        }
+        
+        deinit {
+            self.subscription?.cancel()
+        }
+        
+        func updateSearchResults(for searchController: UISearchController) {
+            guard let text = searchController.searchBar.text else { return }
+            self.text = text
         }
     }
     
-    class Wrapper: UIViewController {
+    class SearchBarWrapperController: UIViewController {
         var searchController: UISearchController? {
-            get {
-                self.parent?.navigationItem.searchController
+            didSet {
+                self.parent?.navigationItem.searchController = searchController
             }
-            set {
-                self.parent?.navigationItem.searchController = newValue
-            }
+        }
+        
+        override func viewWillAppear(_ animated: Bool) {
+            self.parent?.navigationItem.searchController = searchController
+        }
+        override func viewDidAppear(_ animated: Bool) {
+            self.parent?.navigationItem.searchController = searchController
         }
     }
 }
