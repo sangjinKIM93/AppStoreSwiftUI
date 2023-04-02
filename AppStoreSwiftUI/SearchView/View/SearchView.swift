@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    let array = [
+    var array = [
         "사자", "코끼리", "암닭", "사자", "코끼리", "암닭",
         "사자", "코끼리", "암닭", "사자", "코끼리", "암닭"
     ]
@@ -18,8 +18,14 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(array.filter{$0.hasPrefix(searchText) || searchText == ""}, id: \.self) {
-                    searchText in Text(searchText)
+                ForEach(array.filter{$0.hasPrefix(searchText) || searchText == ""}, id: \.self) { searchText in
+                    Button(action: {
+                        // type에 따라 list의 형태를 다르게 하고 싶다면?
+                        // List 내부에서 type으로 분기문을 치면 되지 않을까?
+                        print("\(searchText)")
+                    }) {
+                        Text(searchText)
+                    }
                 }
             }
             .navigationTitle("Navigation")
